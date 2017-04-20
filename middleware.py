@@ -1,4 +1,25 @@
 import database as sql
+from security import auth_me
+from time import sleep
+
+for s in xrange(0, 2):
+    try:
+        permited = [x[0] for x in sql.permited_list()]
+        break
+    except Exception:
+        sleep(s)
+
+
+def authing(data):
+    try:
+        if data['login'] in permited:
+            auth_me(data['login'])
+            return True
+        else:
+            return False
+    except IOError:
+        return False
+
 
 def convert_insert(data):
     values = ['login', 'name', 'last_name']

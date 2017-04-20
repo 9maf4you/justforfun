@@ -1,11 +1,15 @@
-from flask import Flask, jsonify, Response, request, make_response
+from flask import Flask, jsonify, request, make_response
 app = Flask(__name__)
 
-from middleware import is_user_exist, show_user, add_user, remove_user
+from middleware import is_user_exist, show_user, add_user, remove_user, authing
 
-@app.route('/auth', methods=['GET'])
-def authing():
-    return 'Hello, World!'
+@app.route('/auth', methods=['POST'])
+def lalaalla():
+    body = request.get_json()
+    if authing(body):
+        return make_response(jsonify({"Info": "You are has been authed"}))
+    else:
+        return make_response(jsonify({"Info": "You are not permited"}), 403)
 
 
 @app.route('/user/<who>', methods=['GET'])
