@@ -1,7 +1,8 @@
-from flask import Flask, jsonify, Response, request, Request, make_response
+from flask import Flask, jsonify, Response, request, make_response
 app = Flask(__name__)
-import sql3_connect as sql
-from render import returner, convert_insert
+
+import database as sql
+from middleware import is_user_exist, show_user, add_user
 
 myresponse = Response()
 
@@ -12,19 +13,19 @@ def authing():
 
 @app.route('/user/<who>', methods=['GET'])
 def selector(who):
-    resp = sql.do_select(who)
-    answer = jsonify(returner(resp))
-    if len(answer.response[0]) == 0:
+    answer = jsonify(show_user(who))
+    if len(answer.response[0]) != 0:
         return answer
     else:
-        anwser = make_response(jsonify(returner(resp)), 404)
-        return anwser
+        return make_response(answer, 404)
 
 @app.route('/user/add', methods=['POST'])
 def inserter():
     body = request.get_json()
-    data = convert_insert(body)
-    sql.do_insert(data)
-    return make_response(jsonify({"Info": "user has been added"}), 200)
+    if is_user_exist(body):
+        return make_response(jsonify({"Info": "user is exist"}), 400)
+    else:
+        add_user(body)
+        return make_response(jsonify({"Info": "user has been added"}), 200)
 
 app.run(debug=True)
