@@ -1,8 +1,12 @@
 ## To start use this do next:
 1. Create a new db;
-    sqlite3 /tmp/test.db < ./data_schema.sql
+```bash
+sqlite3 /tmp/test.db < ./data_schema.sql
+```
 2. Start an API
-    python backend.py &
+```bash
+python backend.py &
+```
 
 
 ## examples:
