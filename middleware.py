@@ -1,6 +1,6 @@
 import database as sql
 from security import auth_me
-from time import sleep
+from time import sleep, time
 
 for s in xrange(0, 2):
     try:
@@ -10,10 +10,14 @@ for s in xrange(0, 2):
         sleep(s)
 
 
-def authing(data):
+def authing(request):
     try:
-        if data['login'] in permited:
-            auth_me(data['login'])
+        from pprint import pprint
+        print request.get_json()#['environ']['REMOTE_ADDR']
+        login = request.get_json()['login']
+        REMOTE_ADDR = request.environ.get('REMOTE_ADDR')
+        if login in permited:
+            auth_me(login, REMOTE_ADDR)
             return True
         else:
             return False

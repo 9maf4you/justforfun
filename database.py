@@ -44,10 +44,10 @@ def drop_auth(login):
     db.execute(query)
     db.close()
 
-def update_auth_info(login, ts):
+def update_auth_info(login, ts, ip):
     db = sqlite3.connect(dbname)
     print ts
-    query = "update permission set authed = 1, timestmp = {0} where login = \'{1}\';".format(ts, login)
+    query = "update permission set authed = 1, timestmp = {0}, ip = \'{1}\' where login = \'{2}\';".format(ts, ip, login)
     print query
     db.execute(query)
     db.commit()

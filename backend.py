@@ -5,8 +5,8 @@ from middleware import is_user_exist, show_user, add_user, remove_user, authing
 
 @app.route('/auth', methods=['POST'])
 def lalaalla():
-    body = request.get_json()
-    if authing(body):
+    #body = request.get_json()
+    if authing(request):
         return make_response(jsonify({"Info": "You are has been authed"}))
     else:
         return make_response(jsonify({"Info": "You are not permited"}), 403)
