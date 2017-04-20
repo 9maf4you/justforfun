@@ -1,9 +1,13 @@
 ## To start use this do next:
-1. Create a new db;
+1. Install requerements
+```bash
+pip install flask
+```
+2. Create a new db;
 ```bash
 sqlite3 /tmp/test.db < ./data_schema.sql
 ```
-2. Start an API
+3. Start an API
 ```bash
 python backend.py &
 ```
