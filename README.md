@@ -1,6 +1,6 @@
 ## To start use this do next:
 1. Create a new db;
-    sqlite3 /tmp/test.db < ./testdb.sql
+    sqlite3 /tmp/test.db < ./data_schema.sql
 2. Start an API
     python backend.py &
 
