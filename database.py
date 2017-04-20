@@ -16,3 +16,9 @@ def do_insert(user):
     db.commit()
     db.close()
 
+def do_delete(user):
+    db = sqlite3.connect(dbname)
+    query = "DELETE FROM company WHERE login = \"{0}\"".format(user)
+    db.execute(query)
+    db.commit()
+    db.close()

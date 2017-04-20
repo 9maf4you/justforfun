@@ -24,7 +24,6 @@ def validate_req(data):
 
 def is_user_exist(data):
     login = validate_req(data).get('login')
-    print login
     if login:
         if [ x for x in sql.do_select(login)]:
             return True
@@ -47,3 +46,12 @@ def show_user(user):
         return users
     except Exception:
         return users
+
+
+def remove_user(data):
+    try:
+        login = data['login']
+        sql.do_delete(login)
+        return True
+    except Exception:
+        return False
