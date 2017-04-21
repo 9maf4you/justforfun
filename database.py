@@ -1,7 +1,9 @@
 import sqlite3
+from time import sleep, time
 dbname = '/tmp/test.db'
 
 # TODO need a decorator here
+
 
 def do_select(who):
     db = sqlite3.connect(dbname)
@@ -15,6 +17,7 @@ def do_insert(user):
     query = "insert into company (login,first_name,last_name) values (\"{0}\", \"{1}\", \"{2}\");".format(user['login'],
                                                                                                     user['name'],
                                                                                                     user['last_name'])
+    print query
     db.execute(query)
     db.commit()
     db.close()
@@ -29,8 +32,8 @@ def do_delete(user):
 def get_permission(login):
     db = sqlite3.connect(dbname)
     query = "select * from permission where login = \'{0}\';".format(login)
-    db.execute(query)
-    db.close()
+    return db.execute(query)
+
 
 def permited_list():
     db = sqlite3.connect(dbname)
@@ -52,3 +55,10 @@ def update_auth_info(login, ts, ip):
     db.execute(query)
     db.commit()
     db.close()
+
+for s in xrange(0, 2):
+    try:
+        permited_user = [x[0] for x in permited_list()]
+        break
+    except Exception:
+        sleep(s)

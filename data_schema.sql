@@ -18,7 +18,7 @@ COMMIT;
 
 BEGIN TRANSACTION;
 CREATE TABLE permission_action ( login TEXT, action TEXT);
-INSERT INTO "permission" VALUES('admin','[do_delete,update,insert]');
-INSERT INTO "permission" VALUES('yvasya','manager',0, 1492709148);
-INSERT INTO "permission" VALUES('maf','user',0, 1492709148);
+INSERT INTO "permission_action" VALUES('admin','[do_delete,update,insert]');
+INSERT INTO "permission_action" VALUES('yvasya','manager',0, 1492709148);
+INSERT INTO "permission_action" VALUES('maf','user',0, 1492709148);
 COMMIT;

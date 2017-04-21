@@ -5,11 +5,10 @@ from middleware import is_user_exist, show_user, add_user, remove_user, authing
 
 @app.route('/auth', methods=['POST'])
 def lalaalla():
-    #body = request.get_json()
     if authing(request):
         return make_response(jsonify({"Info": "You are has been authed"}))
     else:
-        return make_response(jsonify({"Info": "You are not permited"}), 403)
+        return make_response(jsonify({"Info": "You are not permited_user"}), 403)
 
 
 @app.route('/user/<who>', methods=['GET'])
@@ -23,11 +22,8 @@ def selector(who):
 @app.route('/user/add', methods=['POST'])
 def inserter():
     body = request.get_json()
-    if is_user_exist(body):
-        return make_response(jsonify({"Info": "user is exist"}), 400)
-    else:
-        add_user(body)
-        return make_response(jsonify({"Info": "user has been added"}), 200)
+    print body
+    return add_user(body)
 
 
 @app.route('/user/delete', methods=['DELETE'])
