@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, make_response
 app = Flask(__name__)
 
-from middleware import is_user_exist, show_user, add_user, remove_user, authing
+from middleware import show_user, add_user, remove_user, authing
 
 @app.route('/auth', methods=['POST'])
 def lalaalla():
@@ -19,20 +19,16 @@ def selector(who):
     else:
         return make_response(jsonify({"Info": "user does not exist"}), 404)
 
+
 @app.route('/user/add', methods=['POST'])
 def inserter():
     body = request.get_json()
-    print body
     return add_user(body)
 
 
 @app.route('/user/delete', methods=['DELETE'])
 def removerer():
     body = request.get_json()
-    if not is_user_exist(body):
-        return make_response(jsonify({"Info": "user does not exist"}), 400)
-    else:
-        remove_user(body)
-        return make_response(jsonify({"Info": "user has been deleted"}), 200)
+    return remove_user(body)
 
 app.run(debug=True)

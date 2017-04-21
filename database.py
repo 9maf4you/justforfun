@@ -17,7 +17,6 @@ def do_insert(user):
     query = "insert into company (login,first_name,last_name) values (\"{0}\", \"{1}\", \"{2}\");".format(user['login'],
                                                                                                     user['name'],
                                                                                                     user['last_name'])
-    print query
     db.execute(query)
     db.commit()
     db.close()
@@ -49,9 +48,7 @@ def drop_auth(login):
 
 def update_auth_info(login, ts, ip):
     db = sqlite3.connect(dbname)
-    print ts
     query = "update permission set authed = 1, timestmp = {0}, ip = \'{1}\' where login = \'{2}\';".format(ts, ip, login)
-    print query
     db.execute(query)
     db.commit()
     db.close()
