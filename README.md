@@ -17,7 +17,7 @@ python backend.py &
 Firstable, you have to auth yourself, otherwise your won't to add ore delete user
 
 auth:
-    ```bash
+```bash
 curl -XPOST http://127.0.0.1:5000/auth -d '{"authname": "superturbo300"}' -H 'Content-Type: application/json'
 ```
 check user:
