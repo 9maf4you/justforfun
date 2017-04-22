@@ -16,7 +16,8 @@ def authing(request):
             return True
         else:
             return False
-    except IOError:
+    except Exception as err:
+        syslog(err)
         return False
 
 

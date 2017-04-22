@@ -1,37 +1,39 @@
 import sqlite3
-from time import sleep, time
+from time import sleep
 dbname = '/tmp/test.db'
 
-# TODO need a decorator here
+
+def connect_to_db(func):
+    def wrapper(arg):
+        db = sqlite3.connect(dbname)
+        query = func(arg)
+        cur = db.execute(query)
+        db.commit()
+        return cur
+    return wrapper
 
 
+@connect_to_db
 def do_select(who):
-    db = sqlite3.connect(dbname)
-    query = "select * from company where login = \'{0}\';".format(who)
-    cur = db.execute(query)
-    return cur
+    return "select * from company where login = \'{0}\';".format(who)
 
 
+@connect_to_db
 def do_insert(user):
-    db = sqlite3.connect(dbname)
     query = "insert into company (login,first_name,last_name) values (\"{0}\", \"{1}\", \"{2}\");".format(user['login'],
                                                                                                     user['name'],
                                                                                                     user['last_name'])
-    db.execute(query)
-    db.commit()
-    db.close()
+    return query
 
+
+@connect_to_db
 def do_delete(user):
-    db = sqlite3.connect(dbname)
-    query = "DELETE FROM company WHERE login = \"{0}\"".format(user)
-    db.execute(query)
-    db.commit()
-    db.close()
+    return "DELETE FROM company WHERE login = \"{0}\"".format(user)
 
+
+@connect_to_db
 def get_permission(login):
-    db = sqlite3.connect(dbname)
-    query = "select * from permission where login = \'{0}\';".format(login)
-    return db.execute(query)
+    return "select * from permission where login = \'{0}\';".format(login)
 
 
 def permited_list():
@@ -40,11 +42,6 @@ def permited_list():
     cur = db.execute(query)
     return cur
 
-def drop_auth(login):
-    db = sqlite3.connect(dbname)
-    query = "update permission set authed = 0 where login = \'{0}\';".format(login)
-    db.execute(query)
-    db.close()
 
 def update_auth_info(login, ts, ip):
     db = sqlite3.connect(dbname)
@@ -52,6 +49,7 @@ def update_auth_info(login, ts, ip):
     db.execute(query)
     db.commit()
     db.close()
+
 
 for s in xrange(0, 2):
     try:
